@@ -6,7 +6,12 @@ const routes: Routes = [
     {
         path: 'crud',
         component: PagesComponent,
+    },
+    {
+        path: 'crud/page/:page',
+        component: PagesComponent
     }
+
 ]
 
 @NgModule({
