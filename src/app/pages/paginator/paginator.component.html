@@ -38,7 +38,7 @@
                 </li>
 
                 <li class="page-item" *ngIf="hasta < paginador.totalPages">
-                    <a class="page-link" [routerLink]="['/crud/page',paginador.totalPages]">
+                    <a class="page-link" [routerLink]="['/crud/page',paginador.totalPages-1]">
                         {{paginador.totalPages}}
                     </a>
                 </li>

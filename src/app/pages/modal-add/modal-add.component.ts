@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Registro } from 'src/app/models/registro.model';
 import { ModalAddService } from 'src/app/services/modal-add.service';
 import { PositionService } from 'src/app/services/position.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-add',
@@ -18,13 +20,13 @@ export class ModalAddComponent implements OnInit {
   constructor(
     public modalAddService: ModalAddService,
     private formBuilder: FormBuilder,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private router: Router,
   ) {
     this.buildForm();
   }
 
   ngOnInit(): void {
-    console.log("Hola")
   }
 
   public buildForm() {
@@ -42,8 +44,10 @@ export class ModalAddComponent implements OnInit {
     event?.preventDefault();
     if (this.crearForm?.valid) {
       const value = this.crearForm?.value as Registro;
-      console.log(value);
-      this.positionService.create(value).subscribe(resp => console.log(resp));
+      this.positionService.create(value).subscribe((resp: any) => {
+        Swal.fire('Registro Creado', resp.mensaje, 'success');
+        this.cerrarModal();
+      });
     } else {
       this.crearForm?.markAllAsTouched();
     }

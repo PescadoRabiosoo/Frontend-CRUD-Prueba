@@ -1,4 +1,5 @@
 <app-modal-add></app-modal-add>
+<app-modal-edit [registro]="registroSeleccionado" *ngIf="registroSeleccionado"></app-modal-edit>
 <app-header></app-header>
 <div class="d-flex justify-content-center mt-3">
 
@@ -17,7 +18,7 @@
                             <th>Year of balance</th>
                             <th class="w100">Estado</th>
                             <th class="w100">Category</th>
-                            <th>Item</th>
+                            <th class="w300">Item</th>
                             <th>Amount ($ million)</th>
                             <th>Percent of gdp</th>
                             <th class="w100">Acciones</th>
@@ -44,7 +45,8 @@
                                 {{registro.percent | percent:'1.0-3'}}
                             </td>
                             <td class="d-flex justify-content-around">
-                                <a class="cursor"><i class="bi bi-pen-fill text-primary"></i></a>
+                                <a class="cursor" (click)="abrirModalEdit(registro)"><i
+                                        class="bi bi-pen-fill text-primary"></i></a>
                                 <a class="cursor" (click)="delete(registro.id)"><i
                                         class="bi bi-trash-fill text-danger"></i></a>
                             </td>

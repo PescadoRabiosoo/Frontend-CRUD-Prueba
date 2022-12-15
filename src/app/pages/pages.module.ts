@@ -6,6 +6,7 @@ import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ModalEditComponent } from './modal-edit/modal-edit.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     PaginatorComponent,
-    ModalAddComponent
+    ModalAddComponent,
+    ModalEditComponent
   ]
 })
 export class PagesModule { }

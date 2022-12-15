@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Registro } from '../models/registro.model';
 import { ModalAddService } from '../services/modal-add.service';
+import { ModalEditService } from '../services/modal-edit.service';
 import { PositionService } from '../services/position.service';
 
 @Component({
@@ -12,13 +14,15 @@ import { PositionService } from '../services/position.service';
 })
 export class PagesComponent implements OnInit {
 
-  registros?: Registro[];
+  registros!: Registro[];
   paginador: any;
+  registroSeleccionado!: Registro;
 
   constructor(
     private positionService: PositionService,
     private activatedRoute: ActivatedRoute,
-    private modalAddService: ModalAddService
+    private modalAddService: ModalAddService,
+    private modalEditService: ModalEditService
   ) { }
 
   ngOnInit(): void {
@@ -33,8 +37,15 @@ export class PagesComponent implements OnInit {
       this.positionService.getRegistros(page).subscribe(response => {
         this.registros = response.content as Registro[];
         this.paginador = response;
-        console.log(this.registros)
-        console.log(this.paginador)
+      })
+    });
+
+    this.modalEditService.notificarUpload.subscribe(result => {
+      this.registros = this.registros?.map(reg => {
+        if (reg.id == result.id) {
+          reg = result;
+        }
+        return reg;
       })
     });
   }
@@ -43,8 +54,49 @@ export class PagesComponent implements OnInit {
     this.modalAddService.abrirModal();
   }
 
+  abrirModalEdit(registro: Registro) {
+    this.modalEditService.abrirModal();
+    this.registroSeleccionado = registro;
+  }
+
   delete(id: number) {
-    this.positionService.delete(id).subscribe(response => console.log(response));
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.registros = this.registros?.filter(reg => reg.id !== id);
+        this.positionService.delete(id).subscribe((response: any) => {
+          swalWithBootstrapButtons.fire(
+            'Eliminado!',
+            response.mensaje,
+            'success'
+          )
+        });
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          '',
+          'error'
+        )
+      }
+    })
   }
 
 
