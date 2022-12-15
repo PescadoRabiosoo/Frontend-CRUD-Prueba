@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Registro } from '../models/registro.model';
+import { ModalAddService } from '../services/modal-add.service';
 import { PositionService } from '../services/position.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class PagesComponent implements OnInit {
 
   constructor(
     private positionService: PositionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalAddService: ModalAddService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,14 @@ export class PagesComponent implements OnInit {
         console.log(this.paginador)
       })
     });
+  }
+
+  abrirModal() {
+    this.modalAddService.abrirModal();
+  }
+
+  delete(id: number) {
+    this.positionService.delete(id).subscribe(response => console.log(response));
   }
 
 

@@ -1,5 +1,5 @@
 export class Registro {
-    id?: number;
+    id!: number;
     year?: number;
     amount?: number;
     state?: string;

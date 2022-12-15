@@ -12,6 +12,8 @@ export class PaginatorComponent implements OnInit, OnChanges {
   paginas: number[] = [0];
   desde: number = 0;
   hasta: number = 0;
+  inicio: number = 0;
+  final: number = 0;
 
   constructor() { }
 
@@ -30,6 +32,12 @@ export class PaginatorComponent implements OnInit, OnChanges {
   private initPaginator(): void {
     console.log(this.paginador.number)
     console.log(this.paginador.totalPages)
+
+    this.inicio = 1 + (this.paginador.number * this.paginador.size);
+    this.final = 15 + (this.paginador.number * this.paginador.size);
+    if (this.final > this.paginador.totalElements) {
+      this.final = this.paginador.totalElements;
+    }
 
     this.desde = Math.min(Math.max(1, this.paginador.number - 1), this.paginador.totalPages - 1);
 

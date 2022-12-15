@@ -1,1 +1,105 @@
-<p>modal-add works!</p>
+<div class="fondo-modal-imagen animated fadeIn fast" [class.oculto]="modalAddService.modal">
+    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        style="display: block; padding-right: 17px;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel1">{{titulo}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"
+                            (click)="cerrarModal()">×</span></button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="crearForm" (ngSubmit)="save($event)">
+
+                        <div class="row mb-3">
+
+                            <div class="col-6">
+                                <label class="form-label">Amount:</label>
+                                <input type="number" class="form-control" formControlName="amount"
+                                    [class.is-valid]="amountFieldIsValid" [class.is-invalid]="amountFieldIsInvalid">
+                                <div class="invalid-feedback" *ngIf="amountFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label class="form-label">Year:</label>
+                                <input type="number" class="form-control" formControlName="year"
+                                    [class.is-valid]="yearFieldIsValid" [class.is-invalid]="yearFieldIsInvalid">
+                                <div class="invalid-feedback" *ngIf="yearFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row mb-3">
+
+                            <div class="col-6">
+                                <label class="form-label">State:</label>
+                                <select class="form-select" formControlName="state" [class.is-valid]="stateFieldIsValid"
+                                    [class.is-invalid]="stateFieldIsInvalid">
+                                    <option [ngValue]="undefined">--Select state--</option>
+                                    <option value="Estimated">Estimated</option>
+                                    <option value="Revised">Revised</option>
+                                    <option value="Actual">Actual</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="stateFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" formControlName="category"
+                                    [class.is-valid]="categoryFieldIsValid"
+                                    [class.is-invalid]="categoryFieldIsInvalid">>
+                                    <option [ngValue]="undefined">--Select category--</option>
+                                    <option value="Balance">Balance</option>
+                                    <option value="Revenue">Revenue</option>
+                                    <option value="Expenditure">Expenditure</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="categoryFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-6">
+                                <label class="form-label">Percent of gpd</label><span class="text-muted"> (Ingresar en
+                                    decimales):</span>
+                                <input type="number" class="form-control" formControlName="percent"
+                                    [class.is-valid]="percentFieldIsValid" [class.is-invalid]="percentFieldIsInvalid">
+                                <div class="invalid-feedback" *ngIf="percentFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label class="form-label">Item:</label>
+                                <textarea class="form-control" formControlName="item" cols="4"
+                                    [class.is-valid]="itemFieldIsValid"
+                                    [class.is-invalid]="itemFieldIsInvalid"></textarea>
+                                <div class="invalid-feedback" *ngIf="itemFieldIsInvalid">
+                                    <p>Campo requerido</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary boton">Crear</button>
+
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

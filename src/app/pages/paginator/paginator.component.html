@@ -1,5 +1,8 @@
 <div class="d-flex justify-content-between p-3">
-    <p>Showing 1 to 15 of 200 records</p>
+    <p>Showing {{inicio}} to {{final}} of
+        {{paginador.totalElements}}
+        records
+    </p>
     <div>
         <nav aria-label="Page navigation example">
             <ul class="pagination" *ngIf="paginas.length>0">
@@ -10,13 +13,13 @@
                     </a>
                 </li>
 
-                <li class="page-item" *ngIf="desde > paginador.totalPages">
+                <li class="page-item" *ngIf="hasta > 3">
                     <a class="page-link" [routerLink]="['/crud/page',0]">
                         1
                     </a>
                 </li>
 
-                <li class="text-primary" *ngIf="desde > paginador.totalPages">
+                <li class="text-primary" *ngIf="hasta > 4">
                     <a class="page-link disabled">. . .</a>
                 </li>
 
@@ -30,11 +33,11 @@
                     </a>
                 </li>
 
-                <li class="text-primary" *ngIf="desde <= paginador.totalPages-3">
+                <li class="text-primary" *ngIf="hasta < paginador.totalPages-1">
                     <a class="page-link disabled">. . .</a>
                 </li>
 
-                <li class="page-item" *ngIf="desde <= paginador.totalPages-3">
+                <li class="page-item" *ngIf="hasta < paginador.totalPages">
                     <a class="page-link" [routerLink]="['/crud/page',paginador.totalPages]">
                         {{paginador.totalPages}}
                     </a>
